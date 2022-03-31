@@ -11,5 +11,13 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "rules": {}
+  "rules": {
+    "no-console": "off",
+    "import/prefer-default-export": "off",
+    "no-unused-vars": "warn",
+    "no-trailing-spaces": "off",
+    "import/extensions": "off",
+    "quotes": "warn",
+    "arrow-body-style": "warn"
+  }
 }
