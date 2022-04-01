@@ -1,11 +1,15 @@
 import Joi from "joi";
 import ClientError from "../../../../core/exceptions/ClientError.js";
 
-class AlbumValidator {
+class SongValidator {
   constructor() {
     this.schema = Joi.object({
-      name: Joi.string().required(),
+      title: Joi.string().required(),
       year: Joi.number().required(),
+      genre: Joi.string().required(),
+      performer: Joi.string().required(),
+      duration: Joi.number(),
+      albumId: Joi.string(),
     });
   }
 
@@ -18,4 +22,4 @@ class AlbumValidator {
   }
 }
 
-export default AlbumValidator;
+export default SongValidator;

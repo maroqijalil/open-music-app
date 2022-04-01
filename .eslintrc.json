@@ -18,6 +18,7 @@
     "no-trailing-spaces": "off",
     "import/extensions": "off",
     "quotes": "off",
-    "arrow-body-style": "warn"
+    "arrow-body-style": "warn",
+    "camelcase": "off"
   }
 }

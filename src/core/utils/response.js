@@ -1,5 +1,5 @@
-import ClientError from "../exceptions/ClientError";
-import ServerError from "../exceptions/ServerError";
+import ClientError from "../exceptions/ClientError.js";
+import ServerError from "../exceptions/ServerError.js";
 
 class Response {
   static create400Response({
@@ -77,6 +77,8 @@ class Response {
         code: error.statusCode,
       });
     }
+
+    console.log(error.message);
 
     return this.create500Response({
       h,

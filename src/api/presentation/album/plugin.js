@@ -1,7 +1,7 @@
-import AlbumService from "../../application/services/album/AlbumService";
-import AlbumValidator from "../../application/services/album/AlbumValidator";
-import AlbumRepository from "../../infrastructure/repositories/AlbumRepository";
-import ALBUM_ROUTES from "./routes";
+import AlbumService from "../../application/services/album/AlbumService.js";
+import AlbumValidator from "../../application/services/album/AlbumValidator.js";
+import AlbumRepository from "../../infrastructure/repositories/AlbumRepository.js";
+import ALBUM_ROUTES from "./routes.js";
 
 const ALBUM_PLUGIN = {
   name: 'album',

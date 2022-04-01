@@ -1,11 +1,12 @@
 import Response from "../../../../core/utils/response.js";
 
-class AlbumService {
+class SongService {
   constructor(repository, validator) {
     this.repository = repository;
     this.validator = validator;
 
     this.store = this.store.bind(this);
+    this.get = this.get.bind(this);
     this.getById = this.getById.bind(this);
     this.update = this.update.bind(this);
     this.delete = this.delete.bind(this);
@@ -15,14 +16,33 @@ class AlbumService {
     try {
       this.validator.validate(request.payload);
 
-      const albumId = await this.repository.store(request.payload);
+      const songId = await this.repository.store(request.payload);
 
       return Response.create200Response({
         h,
         data: {
-          albumId,
+          songId,
         },
         code: 201,
+      });
+    } catch (error) {
+      return Response.handleError(h, error);
+    }
+  }
+
+  async get(_, h) {
+    try {
+      const songs = await this.repository.get();
+
+      return Response.create200Response({
+        h,
+        data: {
+          songs: songs.map((song) => ({
+            id: song.id,
+            title: song.title,
+            performer: song.performer,
+          })),
+        },
       });
     } catch (error) {
       return Response.handleError(h, error);
@@ -33,12 +53,12 @@ class AlbumService {
     try {
       const { id } = request.params;
 
-      const album = await this.repository.getById(id);
+      const song = await this.repository.getById(id);
 
       return Response.create200Response({
         h,
         data: {
-          album,
+          song,
         },
       });
     } catch (error) {
@@ -56,7 +76,7 @@ class AlbumService {
 
       return Response.create200Response({
         h,
-        message: "Album berhasil diperbarui",
+        message: "Lagu berhasil diperbarui",
       });
     } catch (error) {
       return Response.handleError(h, error);
@@ -71,7 +91,7 @@ class AlbumService {
 
       return Response.create200Response({
         h,
-        message: "Album berhasil dihapus",
+        message: "Lagu berhasil dihapus",
       });
     } catch (error) {
       return Response.handleError(h, error);
@@ -79,4 +99,4 @@ class AlbumService {
   }
 }
 
-export default AlbumService;
+export default SongService;

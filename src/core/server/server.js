@@ -1,5 +1,6 @@
 import Hapi from '@hapi/hapi';
-import ALBUM_PLUGIN from '../../api/presentation/album/plugin';
+import ALBUM_PLUGIN from '../../api/presentation/album/plugin.js';
+import SONG_PLUGIN from '../../api/presentation/song/plugin.js';
 
 const createServer = async (database) => {
   const server = Hapi.server({
@@ -15,6 +16,10 @@ const createServer = async (database) => {
   await server.register([
     {
       plugin: ALBUM_PLUGIN,
+      options: { database },
+    },
+    {
+      plugin: SONG_PLUGIN,
       options: { database },
     },
   ]);

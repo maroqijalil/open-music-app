@@ -1,6 +1,8 @@
-import { Pool } from "pg";
+import pg from "pg";
 
-const initDatabase = () => Pool({
+const { Pool } = pg;
+
+const initDatabase = () => new Pool({
   user: process.env.PGUSER,
   host: process.env.PGHOST,
   database: process.env.PGDATABASE,

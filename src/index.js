@@ -1,6 +1,6 @@
 import { config } from "dotenv";
-import initDatabase from "./core/db/db";
-import createServer from "./core/server/server";
+import initDatabase from "./core/db/db.js";
+import createServer from "./core/server/server.js";
 
 const start = async () => {
   config();

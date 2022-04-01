@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
-import ClientError from "../../../core/exceptions/ClientError";
-import ServerError from "../../../core/exceptions/ServerError";
-import Album from "../../domain/models/Album";
+import ClientError from "../../../core/exceptions/ClientError.js";
+import ServerError from "../../../core/exceptions/ServerError.js";
+import Album from "../../domain/models/Album.js";
 
 class AlbumRepository {
   constructor(database) {
@@ -27,11 +27,6 @@ class AlbumRepository {
     }
 
     return result.rows[0].id;
-  }
-
-  async get() {
-    const result = await this.database.query('SELECT * FROM albums');
-    return result.rows.map((album) => new Album(album).get());
   }
 
   async getById(id) {
