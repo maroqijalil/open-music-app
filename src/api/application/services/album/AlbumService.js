@@ -1,8 +1,9 @@
 import Response from "../../../../core/utils/response.js";
 
 class AlbumService {
-  constructor(repository, validator) {
-    this.repository = repository;
+  constructor(albumRepository, songRepository, validator) {
+    this.albumRepository = albumRepository;
+    this.songRepository = songRepository;
     this.validator = validator;
 
     this.store = this.store.bind(this);
@@ -15,7 +16,7 @@ class AlbumService {
     try {
       this.validator.validate(request.payload);
 
-      const albumId = await this.repository.store(request.payload);
+      const albumId = await this.albumRepository.store(request.payload);
 
       return Response.create200Response({
         h,
@@ -33,12 +34,18 @@ class AlbumService {
     try {
       const { id } = request.params;
 
-      const album = await this.repository.getById(id);
+      const album = await this.albumRepository.getById(id);
+      const songs = await this.songRepository.getWhere([
+        ['album_id', '=', id],
+      ]);
 
       return Response.create200Response({
         h,
         data: {
-          album,
+          album: {
+            ...album,
+            songs,
+          },
         },
       });
     } catch (error) {
@@ -52,7 +59,7 @@ class AlbumService {
 
       const { id } = request.params;
 
-      await this.repository.update(id, request.payload);
+      await this.albumRepository.update(id, request.payload);
 
       return Response.create200Response({
         h,
@@ -67,7 +74,7 @@ class AlbumService {
     try {
       const { id } = request.params;
 
-      await this.repository.delete(id);
+      await this.albumRepository.delete(id);
 
       return Response.create200Response({
         h,

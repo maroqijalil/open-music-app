@@ -15,7 +15,7 @@ class SongRepository {
       performer,
       genre,
       duration,
-      album_id,
+      albumId,
     } = song;
 
     const id = `song-${nanoid(16)}`;
@@ -24,7 +24,7 @@ class SongRepository {
 
     const query = {
       text: 'INSERT INTO songs VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id',
-      values: [id, title, year, performer, genre, duration, album_id, createdAt, updatedAt],
+      values: [id, title, year, performer, genre, duration, albumId, createdAt, updatedAt],
     };
 
     const result = await this.database.query(query);
@@ -56,6 +56,44 @@ class SongRepository {
     return result.rows.map((song) => new Song(song).get())[0];
   }
 
+  async getWhere(where) {
+    let text = 'SELECT * FROM songs';
+    const values = [];
+
+    if (where.length > 0) {
+      text += ' WHERE';
+
+      let index = 1;
+      where.forEach((opt) => {
+        let key = opt[0];
+        let placeholder = `$${index}`;
+        const aggregate = opt[1];
+        const value = opt[2];
+
+        if (aggregate === 'LIKE') {
+          key = `LOWER(${key})`;
+          placeholder = `LOWER(${placeholder})`;
+        }
+
+        if (index > 1) {
+          text += ` AND ${key} ${aggregate} ${placeholder}`;
+        } else {
+          text += ` ${key} ${aggregate} ${placeholder}`;
+        }
+
+        values.push(value);
+
+        index += 1;
+      });
+    }
+
+    const query = { text, values };
+
+    const result = await this.database.query(query);
+
+    return result.rows.map((song) => new Song(song).get());
+  }
+
   async update(id, song) {
     const {
       title,
@@ -63,14 +101,14 @@ class SongRepository {
       performer,
       genre,
       duration,
-      album_id,
+      albumId,
     } = song;
 
     const updatedAt = new Date().toISOString();
 
     const query = {
       text: 'UPDATE songs SET title = $1, year = $2, performer = $3, genre = $4, duration = $5, album_id = $6, updated_at = $7 WHERE id = $8 RETURNING id',
-      values: [title, year, performer, genre, duration, album_id, updatedAt, id],
+      values: [title, year, performer, genre, duration, albumId, updatedAt, id],
     };
 
     const result = await this.database.query(query);

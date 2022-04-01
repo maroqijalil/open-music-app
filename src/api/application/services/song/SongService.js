@@ -30,9 +30,21 @@ class SongService {
     }
   }
 
-  async get(_, h) {
+  async get(request, h) {
     try {
-      const songs = await this.repository.get();
+      const { title, performer } = request.query;
+
+      const where = [];
+
+      if (title) {
+        where.push(['title', 'LIKE', `%${title}%`]);
+      }
+
+      if (performer) {
+        where.push(['performer', 'LIKE', `%${performer}%`]);
+      }
+
+      const songs = await this.repository.getWhere(where);
 
       return Response.create200Response({
         h,

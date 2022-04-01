@@ -4,8 +4,8 @@ import SONG_PLUGIN from '../../api/presentation/song/plugin.js';
 
 const createServer = async (database) => {
   const server = Hapi.server({
-    host: process.env.SERVER_HOST,
-    port: process.env.SERVER_PORT,
+    host: process.env.SERVER_HOST ?? 'localhost',
+    port: process.env.SERVER_PORT ?? 5000,
     routes: {
       cors: {
         origin: ['*'],
