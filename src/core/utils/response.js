@@ -1,3 +1,6 @@
+import ClientError from "../exceptions/ClientError";
+import ServerError from "../exceptions/ServerError";
+
 class Response {
   static create400Response({
     h,
@@ -56,6 +59,29 @@ class Response {
     response.code(code);
   
     return response;
+  }
+
+  static handleError(h, error) {
+    if (error instanceof ClientError) {
+      return this.create400Response({
+        h,
+        message: error.message,
+        code: error.statusCode,
+      });
+    }
+
+    if (error instanceof ServerError) {
+      return this.create500Response({
+        h,
+        message: error.message,
+        code: error.statusCode,
+      });
+    }
+
+    return this.create500Response({
+      h,
+      message: "Terjadi kesalahan",
+    });
   }
 }
 

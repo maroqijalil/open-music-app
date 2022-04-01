@@ -29,7 +29,7 @@ class AlbumRepository {
     return result.rows[0].id;
   }
 
-  async getAll() {
+  async get() {
     const result = await this.database.query('SELECT * FROM albums');
     return result.rows.map((album) => new Album(album).get());
   }
@@ -43,10 +43,40 @@ class AlbumRepository {
     const result = await this.database.query(query);
 
     if (!result.rows.length) {
-      throw new ClientError("Album tidak ditemukan");
+      throw new ClientError("Album tidak ditemukan", 404);
     }
 
     return result.rows.map((album) => new Album(album).get())[0];
+  }
+
+  async update(id, album) {
+    const { name, year } = album;
+
+    const updatedAt = new Date().toISOString();
+
+    const query = {
+      text: 'UPDATE albums SET name = $1, year = $2, updated_at = $3 WHERE id = $4 RETURNING id',
+      values: [name, year, updatedAt, id],
+    };
+
+    const result = await this.database.query(query);
+
+    if (!result.rows.length) {
+      throw new ClientError("Gagal memperbarui album. Id tidak ditemukan", 404);
+    }
+  }
+
+  async delete(id) {
+    const query = {
+      text: 'DELETE FROM albums WHERE id = $1 RETURNING id',
+      values: [id],
+    };
+
+    const result = await this.database.query(query);
+
+    if (!result.rows.length) {
+      throw new ClientError("Catatan gagal dihapus. Id tidak ditemukan", 404);
+    }
   }
 }
 

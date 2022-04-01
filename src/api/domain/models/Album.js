@@ -1,9 +1,11 @@
 class Album {
-  constructor({
-    id,
-    name,
-    year,
-  }) {
+  constructor(data) {
+    const {
+      id,
+      name,
+      year,
+    } = data;
+
     this.id = id ?? '';
     this.name = name ?? '';
     this.year = year ?? 0;
