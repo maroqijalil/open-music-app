@@ -1,6 +1,6 @@
 import { Pool } from "pg";
 
-const database = Pool({
+const initDatabase = () => Pool({
   user: process.env.PGUSER,
   host: process.env.PGHOST,
   database: process.env.PGDATABASE,
@@ -8,4 +8,4 @@ const database = Pool({
   port: process.env.PGPORT,
 });
 
-export default database;
+export default initDatabase;
