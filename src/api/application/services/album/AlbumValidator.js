@@ -3,14 +3,14 @@ import ClientError from "../../../../core/exceptions/ClientError";
 
 class AlbumValidator {
   constructor() {
-    this.scheme = Joi.object({
+    this.schema = Joi.object({
       name: Joi.string().required(),
       year: Joi.number().required(),
     });
   }
 
   validate(payload) {
-    const result = this.scheme.validate(payload);
+    const result = this.schema.validate(payload);
 
     if (result.error) {
       throw new ClientError(result.error.message);

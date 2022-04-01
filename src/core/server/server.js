@@ -1,4 +1,5 @@
 import Hapi from '@hapi/hapi';
+import ALBUM_PLUGIN from '../../api/presentation/album/plugin';
 
 const createServer = async (database) => {
   const server = Hapi.server({
@@ -10,6 +11,13 @@ const createServer = async (database) => {
       },
     },
   });
+
+  await server.register([
+    {
+      plugin: ALBUM_PLUGIN,
+      options: { database },
+    },
+  ]);
 
   return server;
 };

@@ -7,6 +7,9 @@ class AlbumService {
 
     this.handleError = this.handleError.bind(this);
     this.store = this.store.bind(this);
+    this.getById = this.getById.bind(this);
+    this.update = this.update.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   async store(request, h) {
