@@ -2,6 +2,8 @@ import Hapi from '@hapi/hapi';
 import ALBUM_PLUGIN from '../../api/presentation/album/plugin.js';
 import SONG_PLUGIN from '../../api/presentation/song/plugin.js';
 import Jwt from '@hapi/jwt';
+import AUTH_PLUGIN from '../../api/presentation/auth/plugin.js';
+import USER_PLUGIN from '../../api/presentation/user/plugin.js';
 
 const createServer = async (database) => {
   const server = Hapi.server({
@@ -43,6 +45,14 @@ const createServer = async (database) => {
     },
     {
       plugin: SONG_PLUGIN,
+      options: {database},
+    },
+    {
+      plugin: AUTH_PLUGIN,
+      options: {database},
+    },
+    {
+      plugin: USER_PLUGIN,
       options: {database},
     },
   ]);

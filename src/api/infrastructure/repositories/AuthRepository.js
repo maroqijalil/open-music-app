@@ -16,7 +16,7 @@ class AuthRepository {
 
   async getByToken(token) {
     const query = {
-      text: 'SELECT token FROM auths WHERE token = $1',
+      text: 'SELECT * FROM auths WHERE token = $1',
       values: [token],
     };
 

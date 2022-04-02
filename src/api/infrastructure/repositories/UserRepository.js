@@ -33,7 +33,7 @@ class UserRepository {
 
   async getByUsername(username) {
     const query = {
-      text: 'SELECT username FROM users WHERE username = $1',
+      text: 'SELECT * FROM users WHERE username = $1',
       values: [username],
     };
 

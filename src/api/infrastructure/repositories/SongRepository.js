@@ -1,5 +1,5 @@
 import {nanoid} from 'nanoid';
-import ClientError from '../../../core/exceptions/ClientError.js';
+import NotFoundError from '../../../core/exceptions/NotFoundError.js';
 import ServerError from '../../../core/exceptions/ServerError.js';
 import Song from '../../domain/models/Song.js';
 
@@ -62,7 +62,7 @@ class SongRepository {
     const result = await this.database.query(query);
 
     if (!result.rows.length) {
-      throw new ClientError('Lagu tidak ditemukan', 404);
+      throw new NotFoundError('Lagu tidak ditemukan');
     }
 
     return result.rows.map((song) => new Song(song).get())[0];
@@ -135,7 +135,7 @@ class SongRepository {
     const result = await this.database.query(query);
 
     if (!result.rows.length) {
-      throw new ClientError('Gagal memperbarui lagu. Id tidak ditemukan', 404);
+      throw new NotFoundError('Gagal memperbarui lagu. Id tidak ditemukan');
     }
   }
 
@@ -148,7 +148,7 @@ class SongRepository {
     const result = await this.database.query(query);
 
     if (!result.rows.length) {
-      throw new ClientError('Catatan gagal dihapus. Id tidak ditemukan', 404);
+      throw new NotFoundError('Catatan gagal dihapus. Id tidak ditemukan');
     }
   }
 }
