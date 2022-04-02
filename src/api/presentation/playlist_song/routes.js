@@ -1,7 +1,7 @@
 const routes = (service) => [
   {
     method: 'POST',
-    path: '/playlists',
+    path: '/playlists/{id}/songs',
     handler: service.store,
     options: {
       auth: 'open_music_api_jwt',
@@ -9,7 +9,7 @@ const routes = (service) => [
   },
   {
     method: 'GET',
-    path: '/playlists',
+    path: '/playlists/{id}/songs',
     handler: service.get,
     options: {
       auth: 'open_music_api_jwt',
@@ -17,7 +17,7 @@ const routes = (service) => [
   },
   {
     method: 'DELETE',
-    path: '/playlists/{id}',
+    path: '/playlists/{id}/songs',
     handler: service.delete,
     options: {
       auth: 'open_music_api_jwt',
