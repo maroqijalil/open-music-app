@@ -30,13 +30,17 @@ class UserRepository {
     return result.rows[0].id;
   }
 
-  async verifyUsername(username) {
+  async getByUsername(username) {
     const query = {
       text: 'SELECT username FROM users WHERE username = $1',
       values: [username],
     };
 
-    const result = await this.database.query(query);
+    return await this.database.query(query);
+  }
+
+  async verifyUsername(username) {
+    const result = await this.getByUsername(username);
 
     if (result.rows.length > 0) {
       throw new ClientError(

@@ -12,6 +12,9 @@ class UserService {
     try {
       this.validator.validate(request.payload);
 
+      const {username} = request.payload;
+      await this.repository.verifyUsername(username);
+
       const userId = await this.repository.store(request.payload);
 
       return Response.create200Response({

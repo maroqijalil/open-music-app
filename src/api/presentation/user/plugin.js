@@ -1,18 +1,18 @@
-import SongService from '../../application/services/song/SongService.js';
-import SongValidator from '../../application/services/song/SongValidator.js';
-import SongRepository from
-  '../../infrastructure/repositories/SongRepository.js';
+import UserService from '../../application/services/user/UserService.js';
+import UserValidator from '../../application/services/user/UserValidator.js';
+import UserRepository from
+  '../../infrastructure/repositories/UserRepository.js';
 import routes from './routes.js';
 
-const SONG_PLUGIN = {
-  name: 'song',
+const USER_PLUGIN = {
+  name: 'user',
   version: '1.0.0',
   register: async (server, {database}) => {
-    const repository = new SongRepository(database);
-    const service = new SongService(repository, new SongValidator());
+    const repository = new UserRepository(database);
+    const service = new UserService(repository, new UserValidator());
 
     server.route(routes(service));
   },
 };
 
-export default SONG_PLUGIN;
+export default USER_PLUGIN;
