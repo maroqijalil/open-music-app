@@ -41,11 +41,7 @@ class PlaylistRepository {
 
     const result = await this.database.query(query);
 
-    if (!result.rows.length) {
-      throw new NotFoundError('Playlist tidak ditemukan');
-    }
-
-    return result.rows.map((playlist) => new Playlist(playlist).get())[0];
+    return result.rows.map((playlist) => new Playlist(playlist).get());
   }
 
   async getById(id) {
@@ -54,17 +50,19 @@ class PlaylistRepository {
       values: [id],
     };
 
-    return await this.database.query(query);
-  }
-
-  async verifyOwner(id, owner) {
-    const result = await this.getById(id);
+    const result = await this.database.query(query);
 
     if (!result.rows.length) {
       throw new NotFoundError('Playlist tidak ditemukan');
     }
 
-    if (result.rows[0].owner !== owner) {
+    return result.rows.map((playlist) => new Playlist(playlist).get())[0];
+  }
+
+  async verifyOwner(id, owner) {
+    const result = await this.getById(id);
+
+    if (result.owner !== owner) {
       throw new AuthError('Anda tidak berhak mengakses resource ini');
     }
   }
