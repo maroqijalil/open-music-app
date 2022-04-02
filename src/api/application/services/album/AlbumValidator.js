@@ -1,20 +1,12 @@
 import Joi from 'joi';
-import ClientError from '../../../../core/exceptions/ClientError.js';
+import Validator from '../../../../core/utils/Validator.js';
 
-class AlbumValidator {
+class AlbumValidator extends Validator {
   constructor() {
-    this.schema = Joi.object({
+    super(Joi.object({
       name: Joi.string().required(),
       year: Joi.number().required(),
-    });
-  }
-
-  validate(payload) {
-    const result = this.schema.validate(payload);
-
-    if (result.error) {
-      throw new ClientError(result.error.message);
-    }
+    }));
   }
 }
 

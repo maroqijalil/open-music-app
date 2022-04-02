@@ -1,4 +1,4 @@
-import Response from '../../../../core/utils/response.js';
+import Response from '../../../../core/utils/Response.js';
 
 class AlbumService {
   constructor(albumRepository, songRepository, validator) {

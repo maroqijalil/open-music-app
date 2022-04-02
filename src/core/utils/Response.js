@@ -82,7 +82,7 @@ class Response {
 
     return this.create500Response({
       h,
-      message: 'Terjadi kesalahan',
+      message: 'Maaf, terjadi kegagalan pada server',
     });
   }
 }
