@@ -1,4 +1,4 @@
-import Response from "../../../../core/utils/response.js";
+import Response from '../../../../core/utils/response.js';
 
 class AlbumService {
   constructor(albumRepository, songRepository, validator) {
@@ -32,7 +32,7 @@ class AlbumService {
 
   async getById(request, h) {
     try {
-      const { id } = request.params;
+      const {id} = request.params;
 
       const album = await this.albumRepository.getById(id);
       const songs = await this.songRepository.getWhere([
@@ -57,13 +57,13 @@ class AlbumService {
     try {
       this.validator.validate(request.payload);
 
-      const { id } = request.params;
+      const {id} = request.params;
 
       await this.albumRepository.update(id, request.payload);
 
       return Response.create200Response({
         h,
-        message: "Album berhasil diperbarui",
+        message: 'Album berhasil diperbarui',
       });
     } catch (error) {
       return Response.handleError(h, error);
@@ -72,13 +72,13 @@ class AlbumService {
 
   async delete(request, h) {
     try {
-      const { id } = request.params;
+      const {id} = request.params;
 
       await this.albumRepository.delete(id);
 
       return Response.create200Response({
         h,
-        message: "Album berhasil dihapus",
+        message: 'Album berhasil dihapus',
       });
     } catch (error) {
       return Response.handleError(h, error);

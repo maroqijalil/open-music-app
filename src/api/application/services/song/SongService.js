@@ -1,4 +1,4 @@
-import Response from "../../../../core/utils/response.js";
+import Response from '../../../../core/utils/response.js';
 
 class SongService {
   constructor(repository, validator) {
@@ -32,7 +32,7 @@ class SongService {
 
   async get(request, h) {
     try {
-      const { title, performer } = request.query;
+      const {title, performer} = request.query;
 
       const where = [];
 
@@ -63,7 +63,7 @@ class SongService {
 
   async getById(request, h) {
     try {
-      const { id } = request.params;
+      const {id} = request.params;
 
       const song = await this.repository.getById(id);
 
@@ -82,13 +82,13 @@ class SongService {
     try {
       this.validator.validate(request.payload);
 
-      const { id } = request.params;
+      const {id} = request.params;
 
       await this.repository.update(id, request.payload);
 
       return Response.create200Response({
         h,
-        message: "Lagu berhasil diperbarui",
+        message: 'Lagu berhasil diperbarui',
       });
     } catch (error) {
       return Response.handleError(h, error);
@@ -97,13 +97,13 @@ class SongService {
 
   async delete(request, h) {
     try {
-      const { id } = request.params;
+      const {id} = request.params;
 
       await this.repository.delete(id);
 
       return Response.create200Response({
         h,
-        message: "Lagu berhasil dihapus",
+        message: 'Lagu berhasil dihapus',
       });
     } catch (error) {
       return Response.handleError(h, error);

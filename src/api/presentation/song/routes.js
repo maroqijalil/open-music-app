@@ -1,4 +1,4 @@
-const SONG_ROUTES = (service) => [
+const routes = (service) => [
   {
     method: 'POST',
     path: '/songs',
@@ -26,4 +26,4 @@ const SONG_ROUTES = (service) => [
   },
 ];
 
-export default SONG_ROUTES;
+export default routes;

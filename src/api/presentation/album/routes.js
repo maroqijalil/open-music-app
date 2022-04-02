@@ -1,4 +1,4 @@
-const ALBUM_ROUTES = (service) => [
+const routes = (service) => [
   {
     method: 'POST',
     path: '/albums',
@@ -21,4 +21,4 @@ const ALBUM_ROUTES = (service) => [
   },
 ];
 
-export default ALBUM_ROUTES;
+export default routes;

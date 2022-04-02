@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 class Song {
   constructor(data) {
     const {

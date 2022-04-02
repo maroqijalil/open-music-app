@@ -16,11 +16,11 @@ const createServer = async (database) => {
   await server.register([
     {
       plugin: ALBUM_PLUGIN,
-      options: { database },
+      options: {database},
     },
     {
       plugin: SONG_PLUGIN,
-      options: { database },
+      options: {database},
     },
   ]);
 

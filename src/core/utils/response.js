@@ -1,5 +1,5 @@
-import ClientError from "../exceptions/ClientError.js";
-import ServerError from "../exceptions/ServerError.js";
+import ClientError from '../exceptions/ClientError.js';
+import ServerError from '../exceptions/ServerError.js';
 
 class Response {
   static create400Response({
@@ -12,10 +12,10 @@ class Response {
       message,
     });
     response.code(code);
-  
+
     return response;
   }
-  
+
   static create500Response({
     h,
     message,
@@ -26,10 +26,10 @@ class Response {
       message,
     });
     response.code(code);
-  
+
     return response;
   }
-  
+
   static create200Response({
     h,
     message,
@@ -37,7 +37,7 @@ class Response {
     code = 200,
   }) {
     let response;
-  
+
     if (message && data) {
       response = h.response({
         status: 'success',
@@ -55,9 +55,9 @@ class Response {
         message,
       });
     }
-  
+
     response.code(code);
-  
+
     return response;
   }
 
@@ -82,7 +82,7 @@ class Response {
 
     return this.create500Response({
       h,
-      message: "Terjadi kesalahan",
+      message: 'Terjadi kesalahan',
     });
   }
 }

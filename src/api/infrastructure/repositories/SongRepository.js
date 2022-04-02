@@ -1,7 +1,7 @@
-import { nanoid } from "nanoid";
-import ClientError from "../../../core/exceptions/ClientError.js";
-import ServerError from "../../../core/exceptions/ServerError.js";
-import Song from "../../domain/models/Song.js";
+import {nanoid} from 'nanoid';
+import ClientError from '../../../core/exceptions/ClientError.js';
+import ServerError from '../../../core/exceptions/ServerError.js';
+import Song from '../../domain/models/Song.js';
 
 class SongRepository {
   constructor(database) {
@@ -23,14 +23,26 @@ class SongRepository {
     const updatedAt = createdAt;
 
     const query = {
-      text: 'INSERT INTO songs VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id',
-      values: [id, title, year, performer, genre, duration, albumId, createdAt, updatedAt],
+      text: 'INSERT INTO songs ' +
+            'VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) ' +
+            'RETURNING id',
+      values: [
+        id,
+        title,
+        year,
+        performer,
+        genre,
+        duration,
+        albumId,
+        createdAt,
+        updatedAt,
+      ],
     };
 
     const result = await this.database.query(query);
 
     if (!result.rows[0].id) {
-      throw new ServerError("Lagu gagal ditambahkan");
+      throw new ServerError('Lagu gagal ditambahkan');
     }
 
     return result.rows[0].id;
@@ -50,7 +62,7 @@ class SongRepository {
     const result = await this.database.query(query);
 
     if (!result.rows.length) {
-      throw new ClientError("Lagu tidak ditemukan", 404);
+      throw new ClientError('Lagu tidak ditemukan', 404);
     }
 
     return result.rows.map((song) => new Song(song).get())[0];
@@ -87,7 +99,7 @@ class SongRepository {
       });
     }
 
-    const query = { text, values };
+    const query = {text, values};
 
     const result = await this.database.query(query);
 
@@ -107,14 +119,23 @@ class SongRepository {
     const updatedAt = new Date().toISOString();
 
     const query = {
-      text: 'UPDATE songs SET title = $1, year = $2, performer = $3, genre = $4, duration = $5, album_id = $6, updated_at = $7 WHERE id = $8 RETURNING id',
+      text: 'UPDATE songs ' +
+            'SET title = $1, ' +
+              'year = $2, ' +
+              'performer = $3, ' +
+              'genre = $4, ' +
+              'duration = $5, ' +
+              'album_id = $6, ' +
+              'updated_at = $7 ' +
+            'WHERE id = $8 ' +
+            'RETURNING id',
       values: [title, year, performer, genre, duration, albumId, updatedAt, id],
     };
 
     const result = await this.database.query(query);
 
     if (!result.rows.length) {
-      throw new ClientError("Gagal memperbarui lagu. Id tidak ditemukan", 404);
+      throw new ClientError('Gagal memperbarui lagu. Id tidak ditemukan', 404);
     }
   }
 
@@ -127,7 +148,7 @@ class SongRepository {
     const result = await this.database.query(query);
 
     if (!result.rows.length) {
-      throw new ClientError("Catatan gagal dihapus. Id tidak ditemukan", 404);
+      throw new ClientError('Catatan gagal dihapus. Id tidak ditemukan', 404);
     }
   }
 }

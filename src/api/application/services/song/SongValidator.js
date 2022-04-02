@@ -1,5 +1,5 @@
-import Joi from "joi";
-import ClientError from "../../../../core/exceptions/ClientError.js";
+import Joi from 'joi';
+import ClientError from '../../../../core/exceptions/ClientError.js';
 
 class SongValidator {
   constructor() {
