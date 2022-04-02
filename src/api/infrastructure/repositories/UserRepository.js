@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import {nanoid} from 'nanoid';
 import ClientError from '../../../core/exceptions/ClientError.js';
+import AuthError from '../../../core/exceptions/AuthError.js';
 import ServerError from '../../../core/exceptions/ServerError.js';
 
 class UserRepository {
@@ -46,6 +47,23 @@ class UserRepository {
       throw new ClientError(
           'Gagal menambahkan user. Username sudah digunakan.');
     }
+  }
+
+  async verifyCredential(username, password) {
+    const result = await this.getByUsername(username);
+
+    if (!result.rows.length) {
+      throw new AuthError('Kredensial yang Anda berikan salah');
+    }
+
+    const {id, password: hashedPassword} = result.rows[0];
+    const match = await bcrypt.compare(password, hashedPassword);
+
+    if (!match) {
+      throw new AuthError('Kredensial yang Anda berikan salah');
+    }
+
+    return id;
   }
 }
 
