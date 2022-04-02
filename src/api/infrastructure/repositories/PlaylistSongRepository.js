@@ -1,3 +1,4 @@
+import {nanoid} from 'nanoid';
 import NotFoundError from '../../../core/exceptions/NotFoundError.js';
 import ServerError from '../../../core/exceptions/ServerError.js';
 import Song from '../../domain/models/Song.js';
@@ -10,9 +11,12 @@ class PlaylistSongRepository {
   async store(playlistSong) {
     const {playlistId, songId} = playlistSong;
 
+    const id = `playlist-${nanoid(16)}`;
+
     const query = {
-      text: 'INSERT INTO playlists_songs VALUES($1, $2) RETURNING playlist_id',
-      values: [playlistId, songId],
+      text: 'INSERT INTO playlist_songs ' +
+            'VALUES($1, $2, $3) RETURNING playlist_id',
+      values: [id, playlistId, songId],
     };
 
     const result = await this.database.query(query);
@@ -25,8 +29,8 @@ class PlaylistSongRepository {
   async getByPlaylistId(playlistId) {
     const query = {
       text: 'SELECT songs.* ' +
-            'FROM playlists_songs ' +
-            'JOIN songs ON songs.song_id = playlists_songs.song_id ' +
+            'FROM playlist_songs ' +
+            'JOIN songs ON songs.song_id = playlist_songs.song_id ' +
             'WHERE playlist_id = $1',
       values: [playlistId],
     };
@@ -40,7 +44,7 @@ class PlaylistSongRepository {
     const {playlistId, songId} = playlistSong;
 
     const query = {
-      text: 'DELETE FROM playlists_songs ' +
+      text: 'DELETE FROM playlist_songs ' +
             'WHERE playlist_id = $1 AND song_id = $2 RETURNING id',
       values: [playlistId, songId],
     };

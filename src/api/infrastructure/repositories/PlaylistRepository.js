@@ -1,5 +1,5 @@
 import {nanoid} from 'nanoid';
-import AuthError from '../../../core/exceptions/AuthError.js';
+import ClientError from '../../../core/exceptions/ClientError.js';
 import NotFoundError from '../../../core/exceptions/NotFoundError.js';
 import ServerError from '../../../core/exceptions/ServerError.js';
 import Playlist from '../../domain/models/Playlist.js';
@@ -63,7 +63,7 @@ class PlaylistRepository {
     const result = await this.getById(id);
 
     if (result.owner !== owner) {
-      throw new AuthError('Anda tidak berhak mengakses resource ini');
+      throw new ClientError('Anda tidak berhak mengakses resource ini', 403);
     }
   }
 

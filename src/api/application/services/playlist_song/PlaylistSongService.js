@@ -56,7 +56,11 @@ class PlaylistSongService {
         data: {
           playlist: {
             ...playlist,
-            songs,
+            songs: songs.map((song) => ({
+              id: song.id,
+              title: song.title,
+              performer: song.performer,
+            })),
           },
         },
       });
