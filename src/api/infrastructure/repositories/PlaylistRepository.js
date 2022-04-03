@@ -56,11 +56,12 @@ class PlaylistRepository {
       throw new NotFoundError('Playlist tidak ditemukan');
     }
 
-    return result.rows.map((playlist) => new Playlist(playlist).get())[0];
+    return result.rows[0];
   }
 
   async verifyOwner(id, owner) {
     const result = await this.getById(id);
+    console.log(result);
 
     if (result.owner !== owner) {
       throw new ClientError('Anda tidak berhak mengakses resource ini', 403);

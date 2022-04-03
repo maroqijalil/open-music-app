@@ -11,7 +11,7 @@ class PlaylistSongRepository {
   async store(playlistSong) {
     const {playlistId, songId} = playlistSong;
 
-    const id = `playlist-${nanoid(16)}`;
+    const id = `playlist-song-${nanoid(16)}`;
 
     const query = {
       text: 'INSERT INTO playlist_songs ' +
@@ -21,7 +21,7 @@ class PlaylistSongRepository {
 
     const result = await this.database.query(query);
 
-    if (!result.rows[0].playlist_id) {
+    if (!result.rows[0].id) {
       throw new ServerError('Lagu gagal ditambahkan pada playlist');
     }
   }

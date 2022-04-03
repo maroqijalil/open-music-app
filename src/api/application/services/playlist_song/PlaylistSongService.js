@@ -1,9 +1,15 @@
 import Response from '../../../../core/utils/Response.js';
 
 class PlaylistSongService {
-  constructor(playlistRepository, playlistSongRepository, validator) {
+  constructor({
+    playlistRepository,
+    playlistSongRepository,
+    songRepository,
+    validator,
+  }) {
     this.playlistRepository = playlistRepository;
     this.playlistSongRepository = playlistSongRepository;
+    this.songRepository = songRepository;
     this.validator = validator;
 
     this.verifyOwner = this.verifyOwner.bind(this);
@@ -27,9 +33,11 @@ class PlaylistSongService {
       await this.verifyOwner(request);
 
       const {id: playlistId} = request.params;
+      const {songId} = request.payload;
 
+      await this.songRepository.getById(songId);
       await this.playlistSongRepository.store({
-        ...request.payload,
+        songId,
         playlistId,
       });
 

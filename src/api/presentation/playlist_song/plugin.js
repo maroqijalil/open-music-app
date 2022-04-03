@@ -7,6 +7,8 @@ import PlaylistSongRepository from
 import PlaylistRepository from
   '../../infrastructure/repositories/PlaylistRepository.js';
 import routes from './routes.js';
+import SongRepository
+  from '../../infrastructure/repositories/SongRepository.js';
 
 const PLAYLIST_SONG_PLUGIN = {
   name: 'playlist_song',
@@ -14,10 +16,14 @@ const PLAYLIST_SONG_PLUGIN = {
   register: async (server, {database}) => {
     const playlistRepository = new PlaylistRepository(database);
     const playlistSongRepository = new PlaylistSongRepository(database);
-    const service = new PlaylistSongService(
-        playlistRepository,
-        playlistSongRepository,
-        new PlaylistSongValidator());
+    const songRepository = new SongRepository(database);
+
+    const service = new PlaylistSongService({
+      playlistRepository,
+      playlistSongRepository,
+      songRepository,
+      validator: new PlaylistSongValidator(),
+    });
 
     server.route(routes(service));
   },
