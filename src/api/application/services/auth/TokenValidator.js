@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import Validator from '../../../../core/utils/Validator';
+import Validator from '../../../../core/utils/Validator.js';
 
 class TokenValidator extends Validator {
   constructor() {

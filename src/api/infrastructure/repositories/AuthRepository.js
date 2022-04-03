@@ -24,7 +24,7 @@ class AuthRepository {
   }
 
   async verifyRefreshToken(token) {
-    const result = this.getByToken(token);
+    const result = await this.getByToken(token);
 
     if (!result.rows.length) {
       throw new ClientError('Refresh token tidak valid');
@@ -32,8 +32,6 @@ class AuthRepository {
   }
 
   async delete(token) {
-    await this.verifyRefreshToken(token);
-
     const query = {
       text: 'DELETE FROM auths WHERE token = $1',
       values: [token],

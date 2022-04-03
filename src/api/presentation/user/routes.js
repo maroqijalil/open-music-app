@@ -1,7 +1,7 @@
 const routes = (service) => [
   {
     method: 'POST',
-    path: '/songs',
+    path: '/users',
     handler: service.store,
   },
 ];

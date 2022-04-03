@@ -4,15 +4,19 @@ import PlaylistSongValidator
   from '../../application/services/playlist_song/PlaylistSongValidator.js';
 import PlaylistSongRepository from
   '../../infrastructure/repositories/PlaylistSongRepository.js';
+import PlaylistRepository from
+  '../../infrastructure/repositories/PlaylistRepository.js';
 import routes from './routes.js';
 
 const PLAYLIST_SONG_PLUGIN = {
   name: 'playlist_song',
   version: '1.0.0',
   register: async (server, {database}) => {
-    const repository = new PlaylistSongRepository(database);
+    const playlistRepository = new PlaylistRepository(database);
+    const playlistSongRepository = new PlaylistSongRepository(database);
     const service = new PlaylistSongService(
-        repository,
+        playlistRepository,
+        playlistSongRepository,
         new PlaylistSongValidator());
 
     server.route(routes(service));

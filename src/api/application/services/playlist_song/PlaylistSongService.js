@@ -6,6 +6,7 @@ class PlaylistSongService {
     this.playlistSongRepository = playlistSongRepository;
     this.validator = validator;
 
+    this.verifyOwner = this.verifyOwner.bind(this);
     this.store = this.store.bind(this);
     this.get = this.get.bind(this);
     this.delete = this.delete.bind(this);
@@ -14,6 +15,7 @@ class PlaylistSongService {
   async verifyOwner(request) {
     const {id: playlistId} = request.params;
     const {id: credentialId} = request.auth.credentials;
+    console.log(playlistId + ' ' + credentialId);
 
     await this.playlistRepository.verifyOwner(playlistId, credentialId);
   }

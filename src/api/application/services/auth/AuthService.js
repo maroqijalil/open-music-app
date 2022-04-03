@@ -15,13 +15,15 @@ class AuthService {
 
     this.store = this.store.bind(this);
     this.update = this.update.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   async store(request, h) {
     try {
       this.authValidator.validate(request.payload);
 
-      const id = await this.userRepository.verifyCredential(request.payload);
+      const {username, password} = request.payload;
+      const id = await this.userRepository.verifyCredential(username, password);
 
       const accessToken = Token.generateAccessToken({id});
       const refreshToken = Token.generateRefreshToken({id});
@@ -43,9 +45,9 @@ class AuthService {
 
   async update(request, h) {
     try {
-      const {refreshToken} = request.payload;
+      this.tokenValidator.validate(request.payload);
 
-      this.tokenValidator.validate(refreshToken);
+      const {refreshToken} = request.payload;
 
       await this.authRepository.verifyRefreshToken(refreshToken);
       const id = Token.verifyRefreshToken(refreshToken);
@@ -65,9 +67,9 @@ class AuthService {
 
   async delete(request, h) {
     try {
-      const {refreshToken} = request.payload;
+      this.tokenValidator.validate(request.payload);
 
-      this.tokenValidator.validate(refreshToken);
+      const {refreshToken} = request.payload;
 
       await this.authRepository.verifyRefreshToken(refreshToken);
       await this.authRepository.delete(refreshToken);

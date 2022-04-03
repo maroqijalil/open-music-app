@@ -62,6 +62,8 @@ class Response {
   }
 
   static handleError(h, error) {
+    console.log(error.message);
+
     if (error instanceof ClientError) {
       return this.create400Response({
         h,
@@ -77,8 +79,6 @@ class Response {
         code: error.statusCode,
       });
     }
-
-    console.log(error.message);
 
     return this.create500Response({
       h,
