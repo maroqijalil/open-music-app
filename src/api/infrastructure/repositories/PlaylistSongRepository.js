@@ -30,17 +30,17 @@ class PlaylistSongRepository {
     const query = {
       text: 'SELECT songs.* ' +
             'FROM playlist_songs ' +
-            'JOIN songs ON songs.song_id = playlist_songs.song_id ' +
+            'JOIN songs ON songs.id = playlist_songs.song_id ' +
             'WHERE playlist_id = $1',
       values: [playlistId],
     };
 
     const result = await this.database.query(query);
 
-    return result.rows.map((playlistSong) => new Song(playlistSong).get());
+    return result.rows.map((song) => new Song(song).get());
   }
 
-  async deleteBySongId(playlistSong) {
+  async delete(playlistSong) {
     const {playlistId, songId} = playlistSong;
 
     const query = {

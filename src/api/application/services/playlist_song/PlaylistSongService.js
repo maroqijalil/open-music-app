@@ -21,7 +21,6 @@ class PlaylistSongService {
   async verifyOwner(request) {
     const {id: playlistId} = request.params;
     const {id: credentialId} = request.auth.credentials;
-    console.log(playlistId + ' ' + credentialId);
 
     await this.playlistRepository.verifyOwner(playlistId, credentialId);
   }
@@ -81,6 +80,8 @@ class PlaylistSongService {
 
   async delete(request, h) {
     try {
+      this.validator.validate(request.payload);
+
       await this.verifyOwner(request);
 
       const {id: playlistId} = request.params;

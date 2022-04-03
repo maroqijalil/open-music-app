@@ -44,7 +44,7 @@ class PlaylistRepository {
     return result.rows.map((playlist) => new Playlist(playlist).get());
   }
 
-  async getById(id) {
+  async getRawById(id) {
     const query = {
       text: 'SELECT * FROM playlists WHERE id = $1',
       values: [id],
@@ -59,9 +59,26 @@ class PlaylistRepository {
     return result.rows[0];
   }
 
+  async getById(id) {
+    const query = {
+      text: 'SELECT playlists.*, users.username ' +
+            'FROM playlists ' +
+            'JOIN users ON users.id = playlists.owner ' +
+            'WHERE playlists.id = $1',
+      values: [id],
+    };
+
+    const result = await this.database.query(query);
+
+    if (!result.rows.length) {
+      throw new NotFoundError('Playlist tidak ditemukan');
+    }
+
+    return result.rows.map((playlist) => new Playlist(playlist).get())[0];
+  }
+
   async verifyOwner(id, owner) {
-    const result = await this.getById(id);
-    console.log(result);
+    const result = await this.getRawById(id);
 
     if (result.owner !== owner) {
       throw new ClientError('Anda tidak berhak mengakses resource ini', 403);
