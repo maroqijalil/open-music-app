@@ -14,11 +14,10 @@ class PlaylistRepository {
 
     const id = `playlist-${nanoid(16)}`;
     const createdAt = new Date().toISOString();
-    const updatedAt = createdAt;
 
     const query = {
-      text: 'INSERT INTO playlists VALUES($1, $2, $3, $4, $5) RETURNING id',
-      values: [id, name, owner, createdAt, updatedAt],
+      text: 'INSERT INTO playlists VALUES($1, $2, $3, $4, $4) RETURNING id',
+      values: [id, name, owner, createdAt],
     };
 
     const result = await this.database.query(query);

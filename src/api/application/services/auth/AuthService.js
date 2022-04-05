@@ -19,68 +19,56 @@ class AuthService {
   }
 
   async store(request, h) {
-    try {
-      this.authValidator.validate(request.payload);
+    this.authValidator.validate(request.payload);
 
-      const {username, password} = request.payload;
-      const id = await this.userRepository.verifyCredential(username, password);
+    const {username, password} = request.payload;
+    const id = await this.userRepository.verifyCredential(username, password);
 
-      const accessToken = Token.generateAccessToken({id});
-      const refreshToken = Token.generateRefreshToken({id});
+    const accessToken = Token.generateAccessToken({id});
+    const refreshToken = Token.generateRefreshToken({id});
 
-      await this.authRepository.store(refreshToken);
+    await this.authRepository.store(refreshToken);
 
-      return Response.create200Response({
-        h,
-        data: {
-          accessToken,
-          refreshToken,
-        },
-        code: 201,
-      });
-    } catch (error) {
-      return Response.handleError(h, error);
-    }
+    return Response.create200Response({
+      h,
+      data: {
+        accessToken,
+        refreshToken,
+      },
+      code: 201,
+    });
   }
 
   async update(request, h) {
-    try {
-      this.tokenValidator.validate(request.payload);
+    this.tokenValidator.validate(request.payload);
 
-      const {refreshToken} = request.payload;
+    const {refreshToken} = request.payload;
 
-      await this.authRepository.verifyRefreshToken(refreshToken);
-      const id = Token.verifyRefreshToken(refreshToken);
+    await this.authRepository.verifyRefreshToken(refreshToken);
+    const id = Token.verifyRefreshToken(refreshToken);
 
-      const accessToken = Token.generateAccessToken(id);
-      return {
-        status: 'success',
-        message: 'Access Token berhasil diperbarui',
-        data: {
-          accessToken,
-        },
-      };
-    } catch (error) {
-      return Response.handleError(h, error);
-    }
+    const accessToken = Token.generateAccessToken(id);
+    return {
+      status: 'success',
+      message: 'Access Token berhasil diperbarui',
+      data: {
+        accessToken,
+      },
+    };
   }
 
   async delete(request, h) {
-    try {
-      this.tokenValidator.validate(request.payload);
+    this.tokenValidator.validate(request.payload);
 
-      const {refreshToken} = request.payload;
+    const {refreshToken} = request.payload;
 
-      await this.authRepository.verifyRefreshToken(refreshToken);
-      await this.authRepository.delete(refreshToken);
+    await this.authRepository.verifyRefreshToken(refreshToken);
+    await this.authRepository.delete(refreshToken);
 
-      return {
-        status: 'success',
-        message: 'Refresh token berhasil dihapus',
-      };
-    } catch (error) {
-      return Response.handleError(h, error);
-    }
+    return {
+      status: 'success',
+      message: 'Refresh token berhasil dihapus',
+    };
   }
 }
 

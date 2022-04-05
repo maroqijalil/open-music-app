@@ -62,7 +62,7 @@ class Response {
   }
 
   static handleError(h, error) {
-    console.log(error.message);
+    console.log(error);
 
     if (error instanceof ClientError) {
       return this.create400Response({
@@ -78,6 +78,24 @@ class Response {
         message: error.message,
         code: error.statusCode,
       });
+    }
+
+    if (error.output.payload) {
+      const {statusCode: code, message} = error.output.payload;
+
+      if (code >= 400 && code < 500) {
+        return this.create400Response({
+          h,
+          message,
+          code,
+        });
+      } else if (code >= 500 && code < 600) {
+        return this.create500Response({
+          h,
+          message,
+          code,
+        });
+      }
     }
 
     return this.create500Response({

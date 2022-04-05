@@ -7,6 +7,9 @@ import USER_PLUGIN from '../../api/presentation/user/plugin.js';
 import PLAYLIST_PLUGIN from '../../api/presentation/playlist/plugin.js';
 import PLAYLIST_SONG_PLUGIN
   from '../../api/presentation/playlist_song/plugin.js';
+import Response from '../utils/Response.js';
+import ClientError from '../exceptions/ClientError.js';
+import ServerError from '../exceptions/ServerError.js';
 
 const createServer = async (database) => {
   const server = Hapi.server({
@@ -67,6 +70,28 @@ const createServer = async (database) => {
       options: {database},
     },
   ]);
+
+  server.ext('onPreResponse', (request, h) => {
+    const {response} = request;
+
+    if (response instanceof ClientError) {
+      return Response.create400Response({
+        h,
+        message: response.message,
+        code: response.statusCode,
+      });
+    }
+
+    if (response instanceof ServerError) {
+      return Response.create500Response({
+        h,
+        message: response.message,
+        code: response.statusCode,
+      });
+    }
+
+    return response.continue || response;
+  });
 
   return server;
 };
