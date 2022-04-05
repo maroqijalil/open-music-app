@@ -26,78 +26,66 @@ class PlaylistSongService {
   }
 
   async store(request, h) {
-    try {
-      this.validator.validate(request.payload);
+    this.validator.validate(request.payload);
 
-      await this.verifyOwner(request);
+    await this.verifyOwner(request);
 
-      const {id: playlistId} = request.params;
-      const {songId} = request.payload;
+    const {id: playlistId} = request.params;
+    const {songId} = request.payload;
 
-      await this.songRepository.getById(songId);
-      await this.playlistSongRepository.store({
-        songId,
-        playlistId,
-      });
+    await this.songRepository.getById(songId);
+    await this.playlistSongRepository.store({
+      songId,
+      playlistId,
+    });
 
-      return Response.create200Response({
-        h,
-        message: 'Lagu berhasil ditambahkan pada playlist',
-        code: 201,
-      });
-    } catch (error) {
-      return Response.handleError(h, error);
-    }
+    return Response.create200Response({
+      h,
+      message: 'Lagu berhasil ditambahkan pada playlist',
+      code: 201,
+    });
   }
 
   async get(request, h) {
-    try {
-      await this.verifyOwner(request);
+    await this.verifyOwner(request);
 
-      const {id: playlistId} = request.params;
+    const {id: playlistId} = request.params;
 
-      const playlist = await this.playlistRepository.getById(playlistId);
-      const songs = await this.playlistSongRepository.getByPlaylistId(
-          playlistId);
+    const playlist = await this.playlistRepository.getById(playlistId);
+    const songs = await this.playlistSongRepository.getByPlaylistId(
+        playlistId);
 
-      return Response.create200Response({
-        h,
-        data: {
-          playlist: {
-            ...playlist,
-            songs: songs.map((song) => ({
-              id: song.id,
-              title: song.title,
-              performer: song.performer,
-            })),
-          },
+    return Response.create200Response({
+      h,
+      data: {
+        playlist: {
+          ...playlist,
+          songs: songs.map((song) => ({
+            id: song.id,
+            title: song.title,
+            performer: song.performer,
+          })),
         },
-      });
-    } catch (error) {
-      return Response.handleError(h, error);
-    }
+      },
+    });
   }
 
   async delete(request, h) {
-    try {
-      this.validator.validate(request.payload);
+    this.validator.validate(request.payload);
 
-      await this.verifyOwner(request);
+    await this.verifyOwner(request);
 
-      const {id: playlistId} = request.params;
+    const {id: playlistId} = request.params;
 
-      await this.playlistSongRepository.delete({
-        ...request.payload,
-        playlistId,
-      });
+    await this.playlistSongRepository.delete({
+      ...request.payload,
+      playlistId,
+    });
 
-      return Response.create200Response({
-        h,
-        message: 'PlaylistSong berhasil dihapus',
-      });
-    } catch (error) {
-      return Response.handleError(h, error);
-    }
+    return Response.create200Response({
+      h,
+      message: 'PlaylistSong berhasil dihapus',
+    });
   }
 }
 

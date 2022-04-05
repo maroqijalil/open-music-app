@@ -9,24 +9,20 @@ class UserService {
   }
 
   async store(request, h) {
-    try {
-      this.validator.validate(request.payload);
+    this.validator.validate(request.payload);
 
-      const {username} = request.payload;
-      await this.repository.verifyUsername(username);
+    const {username} = request.payload;
+    await this.repository.verifyUsername(username);
 
-      const userId = await this.repository.store(request.payload);
+    const userId = await this.repository.store(request.payload);
 
-      return Response.create200Response({
-        h,
-        data: {
-          userId,
-        },
-        code: 201,
-      });
-    } catch (error) {
-      return Response.handleError(h, error);
-    }
+    return Response.create200Response({
+      h,
+      data: {
+        userId,
+      },
+      code: 201,
+    });
   }
 }
 
