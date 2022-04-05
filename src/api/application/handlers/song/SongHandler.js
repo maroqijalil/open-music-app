@@ -1,6 +1,6 @@
 import Response from '../../../../core/utils/Response.js';
 
-class SongService {
+class SongHandler {
   constructor(repository, validator) {
     this.repository = repository;
     this.validator = validator;
@@ -91,4 +91,4 @@ class SongService {
   }
 }
 
-export default SongService;
+export default SongHandler;

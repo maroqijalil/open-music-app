@@ -1,7 +1,7 @@
-import PlaylistSongService
-  from '../../application/services/playlist_song/PlaylistSongService.js';
+import PlaylistSongHandler
+  from '../../application/handlers/playlist_song/PlaylistSongHandler.js';
 import PlaylistSongValidator
-  from '../../application/services/playlist_song/PlaylistSongValidator.js';
+  from '../../application/handlers/playlist_song/PlaylistSongValidator.js';
 import PlaylistSongRepository from
   '../../infrastructure/repositories/PlaylistSongRepository.js';
 import PlaylistRepository from
@@ -18,14 +18,14 @@ const PLAYLIST_SONG_PLUGIN = {
     const playlistSongRepository = new PlaylistSongRepository(database);
     const songRepository = new SongRepository(database);
 
-    const service = new PlaylistSongService({
+    const handler = new PlaylistSongHandler({
       playlistRepository,
       playlistSongRepository,
       songRepository,
       validator: new PlaylistSongValidator(),
     });
 
-    server.route(routes(service));
+    server.route(routes(handler));
   },
 };
 

@@ -1,6 +1,6 @@
-import AuthService from '../../application/services/auth/AuthService.js';
-import AuthValidator from '../../application/services/auth/AuthValidator.js';
-import TokenValidator from '../../application/services/auth/TokenValidator.js';
+import AuthHandler from '../../application/handlers/auth/AuthHandler.js';
+import AuthValidator from '../../application/handlers/auth/AuthValidator.js';
+import TokenValidator from '../../application/handlers/auth/TokenValidator.js';
 import AuthRepository from
   '../../infrastructure/repositories/AuthRepository.js';
 import UserRepository
@@ -16,14 +16,14 @@ const AUTH_PLUGIN = {
     const authValidator = new AuthValidator();
     const tokenValidator = new TokenValidator();
 
-    const service = new AuthService({
+    const handler = new AuthHandler({
       authRepository,
       userRepository,
       authValidator,
       tokenValidator,
     });
 
-    server.route(routes(service));
+    server.route(routes(handler));
   },
 };
 

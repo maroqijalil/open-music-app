@@ -1,6 +1,6 @@
 import Response from '../../../../core/utils/Response.js';
 
-class UserService {
+class UserHandler {
   constructor(repository, validator) {
     this.repository = repository;
     this.validator = validator;
@@ -26,4 +26,4 @@ class UserService {
   }
 }
 
-export default UserService;
+export default UserHandler;

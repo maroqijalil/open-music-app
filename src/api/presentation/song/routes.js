@@ -1,28 +1,28 @@
-const routes = (service) => [
+const routes = (handler) => [
   {
     method: 'POST',
     path: '/songs',
-    handler: service.store,
+    handler: handler.store,
   },
   {
     method: 'GET',
     path: '/songs',
-    handler: service.get,
+    handler: handler.get,
   },
   {
     method: 'GET',
     path: '/songs/{id}',
-    handler: service.getById,
+    handler: handler.getById,
   },
   {
     method: 'PUT',
     path: '/songs/{id}',
-    handler: service.update,
+    handler: handler.update,
   },
   {
     method: 'DELETE',
     path: '/songs/{id}',
-    handler: service.delete,
+    handler: handler.delete,
   },
 ];
 

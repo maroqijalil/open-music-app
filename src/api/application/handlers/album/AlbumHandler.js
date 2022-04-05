@@ -1,6 +1,6 @@
 import Response from '../../../../core/utils/Response.js';
 
-class AlbumService {
+class AlbumHandler {
   constructor(albumRepository, songRepository, validator) {
     this.albumRepository = albumRepository;
     this.songRepository = songRepository;
@@ -70,4 +70,4 @@ class AlbumService {
   }
 }
 
-export default AlbumService;
+export default AlbumHandler;

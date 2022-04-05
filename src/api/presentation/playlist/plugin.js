@@ -1,7 +1,7 @@
-import PlaylistService
-  from '../../application/services/playlist/PlaylistService.js';
+import PlaylistHandler
+  from '../../application/handlers/playlist/PlaylistHandler.js';
 import PlaylistValidator
-  from '../../application/services/playlist/PlaylistValidator.js';
+  from '../../application/handlers/playlist/PlaylistValidator.js';
 import PlaylistRepository from
   '../../infrastructure/repositories/PlaylistRepository.js';
 import routes from './routes.js';
@@ -11,9 +11,9 @@ const PLAYLIST_PLUGIN = {
   version: '1.0.0',
   register: async (server, {database}) => {
     const repository = new PlaylistRepository(database);
-    const service = new PlaylistService(repository, new PlaylistValidator());
+    const handler = new PlaylistHandler(repository, new PlaylistValidator());
 
-    server.route(routes(service));
+    server.route(routes(handler));
   },
 };
 

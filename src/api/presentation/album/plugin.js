@@ -1,5 +1,5 @@
-import AlbumService from '../../application/services/album/AlbumService.js';
-import AlbumValidator from '../../application/services/album/AlbumValidator.js';
+import AlbumHandler from '../../application/handlers/album/AlbumHandler.js';
+import AlbumValidator from '../../application/handlers/album/AlbumValidator.js';
 import AlbumRepository
   from '../../infrastructure/repositories/AlbumRepository.js';
 import SongRepository
@@ -12,13 +12,13 @@ const ALBUM_PLUGIN = {
   register: async (server, {database}) => {
     const albumRepository = new AlbumRepository(database);
     const songRepository = new SongRepository(database);
-    const service = new AlbumService(
+    const handler = new AlbumHandler(
         albumRepository,
         songRepository,
         new AlbumValidator(),
     );
 
-    server.route(routes(service));
+    server.route(routes(handler));
   },
 };
 

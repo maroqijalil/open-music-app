@@ -1,7 +1,7 @@
 import Response from '../../../../core/utils/Response.js';
 import Token from '../../../../core/utils/Token.js';
 
-class AuthService {
+class AuthHandler {
   constructor({
     authRepository,
     userRepository,
@@ -72,4 +72,4 @@ class AuthService {
   }
 }
 
-export default AuthService;
+export default AuthHandler;

@@ -1,6 +1,6 @@
 import Response from '../../../../core/utils/Response.js';
 
-class PlaylistService {
+class PlaylistHandler {
   constructor(repository, validator) {
     this.repository = repository;
     this.validator = validator;
@@ -56,4 +56,4 @@ class PlaylistService {
   }
 }
 
-export default PlaylistService;
+export default PlaylistHandler;

@@ -1,5 +1,5 @@
-import SongService from '../../application/services/song/SongService.js';
-import SongValidator from '../../application/services/song/SongValidator.js';
+import SongHandler from '../../application/handlers/song/SongHandler.js';
+import SongValidator from '../../application/handlers/song/SongValidator.js';
 import SongRepository from
   '../../infrastructure/repositories/SongRepository.js';
 import routes from './routes.js';
@@ -9,9 +9,9 @@ const SONG_PLUGIN = {
   version: '1.0.0',
   register: async (server, {database}) => {
     const repository = new SongRepository(database);
-    const service = new SongService(repository, new SongValidator());
+    const handler = new SongHandler(repository, new SongValidator());
 
-    server.route(routes(service));
+    server.route(routes(handler));
   },
 };
 

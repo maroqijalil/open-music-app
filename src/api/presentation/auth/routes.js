@@ -1,18 +1,18 @@
-const routes = (service) => [
+const routes = (handler) => [
   {
     method: 'POST',
     path: '/authentications',
-    handler: service.store,
+    handler: handler.store,
   },
   {
     method: 'PUT',
     path: '/authentications',
-    handler: service.update,
+    handler: handler.update,
   },
   {
     method: 'DELETE',
     path: '/authentications',
-    handler: service.delete,
+    handler: handler.delete,
   },
 ];
 
