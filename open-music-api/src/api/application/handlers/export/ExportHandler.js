@@ -1,8 +1,8 @@
 import Response from '../../../../core/utils/Response.js';
 
 class ExportHandler {
-  constructor(repository, validator) {
-    this.repository = repository;
+  constructor(service, validator) {
+    this.service = service;
     this.validator = validator;
 
     this.store = this.store.bind(this);
@@ -11,16 +11,16 @@ class ExportHandler {
   async store(request, h) {
     this.validator.validate(request.payload);
 
-    const {username} = request.payload;
-    await this.repository.verifyExportname(username);
+    const message = {
+      userId: request.auth.credentials.id,
+      targetEmail: request.payload.targetEmail,
+    };
 
-    const userId = await this.repository.store(request.payload);
+    await this.service.send('export:notes', JSON.stringify(message));
 
     return Response.create200Response({
       h,
-      data: {
-        userId,
-      },
+      message: 'Permintaan Anda sedang kami proses',
       code: 201,
     });
   }
