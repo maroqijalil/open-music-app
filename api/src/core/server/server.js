@@ -10,6 +10,8 @@ import PLAYLIST_SONG_PLUGIN
 import Response from '../utils/Response.js';
 import ClientError from '../exceptions/ClientError.js';
 import ServerError from '../exceptions/ServerError.js';
+import EXPORT_PLAYLIST_PLUGIN
+  from '../../api/presentation/export/playlist/plugin.js';
 
 const createServer = async (database) => {
   const server = Hapi.server({
@@ -67,6 +69,10 @@ const createServer = async (database) => {
     },
     {
       plugin: PLAYLIST_SONG_PLUGIN,
+      options: {database},
+    },
+    {
+      plugin: EXPORT_PLAYLIST_PLUGIN,
       options: {database},
     },
   ]);
