@@ -10,11 +10,11 @@ import EmailBroker from '../../../infrastructure/brokers/EmailBroker.js';
 const EXPORT_PLAYLIST_PLUGIN = {
   name: 'export/playlist',
   version: '1.0.0',
-  register: async (server, {database}) => {
+  register: async (server, {database, broker}) => {
     const repository = new ExportPlaylistRepository(database);
-    const broker = new EmailBroker();
+    const service = new EmailBroker(broker);
     const handler = new ExportPlaylistHandler(
-        repository, broker, new ExportPlaylistValidator());
+        repository, service, new ExportPlaylistValidator());
 
     server.route(routes(handler));
   },

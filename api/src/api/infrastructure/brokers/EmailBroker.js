@@ -1,14 +1,15 @@
-import {connect} from 'amqplib';
-
 class EmailBroker {
+  constructor(broker) {
+    this.broker = broker;
+  }
+
   async send(queue, message) {
-    const connection = await connect(process.env.RABBITMQ_SERVER);
-    const channel = await connection.createChannel();
+    const channel = await this.broker.createChannel();
     await channel.assertQueue(queue, {durable: true});
     await channel.sendToQueue(queue, Buffer.from(message));
 
     setTimeout(() => {
-      connection.close();
+      this.broker.close();
     }, 1000);
   }
 }

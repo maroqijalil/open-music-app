@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "bugs": {
+    "start": "node ./src/index.js",
     "url": "https://github.com/maroqijalil/open-music-app/issues"
   },
   "homepage": "https://github.com/maroqijalil/open-music-app#readme",

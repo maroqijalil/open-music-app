@@ -13,7 +13,7 @@ import ServerError from '../exceptions/ServerError.js';
 import EXPORT_PLAYLIST_PLUGIN
   from '../../api/presentation/export/playlist/plugin.js';
 
-const createServer = async (database) => {
+const createServer = async (database, broker) => {
   const server = Hapi.server({
     host: process.env.SERVER_HOST ?? 'localhost',
     port: process.env.SERVER_PORT ?? 5000,
@@ -73,7 +73,7 @@ const createServer = async (database) => {
     },
     {
       plugin: EXPORT_PLAYLIST_PLUGIN,
-      options: {database},
+      options: {database, broker},
     },
   ]);
 
