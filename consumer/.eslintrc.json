@@ -1,18 +1,18 @@
 {
   "env": {
-    "commonjs": true,
+    "browser": true,
     "es2021": true,
     "node": true
   },
   "extends": [
-    "airbnb-base"
+    "eslint:recommended",
+    "google"
   ],
   "parserOptions": {
-    "ecmaVersion": 2020
+    "ecmaVersion": "latest",
+    "sourceType": "module"
   },
   "rules": {
-    "linebreak-style": "off",
-    "no-underscore-dangle": "off",
-    "no-console": "off"
+    "require-jsdoc": "off"
   }
 }

@@ -18,9 +18,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/maroqijalil/open-music-api/issues"
+    "url": "https://github.com/maroqijalil/open-music-app/issues"
   },
-  "homepage": "https://github.com/maroqijalil/open-music-api#readme",
+  "homepage": "https://github.com/maroqijalil/open-music-app#readme",
   "dependencies": {
     "@hapi/hapi": "^20.2.1",
     "@hapi/jwt": "^2.1.1",
