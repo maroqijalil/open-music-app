@@ -12,8 +12,10 @@ import ClientError from '../exceptions/ClientError.js';
 import ServerError from '../exceptions/ServerError.js';
 import EXPORT_PLAYLIST_PLUGIN
   from '../../api/presentation/export/playlist/plugin.js';
+import Inert from '@hapi/inert';
+import UPLOAD_IMG_PLUGIN from '../../api/presentation/upload/img/plugin.js';
 
-const createServer = async (database, broker) => {
+const createServer = async (database, broker, publicPath) => {
   const server = Hapi.server({
     host: process.env.SERVER_HOST ?? 'localhost',
     port: process.env.SERVER_PORT ?? 5000,
@@ -27,6 +29,9 @@ const createServer = async (database, broker) => {
   await server.register([
     {
       plugin: Jwt,
+    },
+    {
+      plugin: Inert,
     },
   ]);
 
@@ -74,6 +79,10 @@ const createServer = async (database, broker) => {
     {
       plugin: EXPORT_PLAYLIST_PLUGIN,
       options: {database, broker},
+    },
+    {
+      plugin: UPLOAD_IMG_PLUGIN,
+      options: {publicPath},
     },
   ]);
 
