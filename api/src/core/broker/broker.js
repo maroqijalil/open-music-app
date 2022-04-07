@@ -1,4 +1,4 @@
-import amqplib from 'amqplib';
+import amqp from 'amqplib';
 
 class Broker {
   constructor({host}) {
@@ -7,7 +7,7 @@ class Broker {
   }
 
   async connect() {
-    this.connection = await amqplib.connect(this.host);
+    this.connection = await amqp.connect(this.host);
   }
 
   async createChannel() {

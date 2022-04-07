@@ -1,14 +1,16 @@
 import {config} from 'dotenv';
 import initDatabase from './core/db/db.js';
-import createServer from './core/server/server.js';
+import initMailer from './core/mailer/mailer';
+import createBroker from './core/broker/broker.js';
 
 const start = async () => {
   config();
 
   const database = initDatabase();
+  const mailer = initMailer();
 
-  const server = await createServer(database);
-  await server.start();
+  const broker = await createBroker(database, mailer);
+  broker.start();
 };
 
 start();
