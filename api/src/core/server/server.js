@@ -17,8 +17,8 @@ import UPLOAD_IMG_PLUGIN from '../../api/presentation/upload/img/plugin.js';
 
 const createServer = async (database, broker, publicPath) => {
   const server = Hapi.server({
-    host: process.env.SERVER_HOST ?? 'localhost',
-    port: process.env.SERVER_PORT ?? 5000,
+    host: process.env.HOST ?? 'localhost',
+    port: process.env.PORT ?? 5000,
     routes: {
       cors: {
         origin: ['*'],

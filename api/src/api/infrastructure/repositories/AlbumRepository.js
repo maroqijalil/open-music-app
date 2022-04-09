@@ -1,6 +1,7 @@
 import {nanoid} from 'nanoid';
 import NotFoundError from '../../../core/exceptions/NotFoundError.js';
 import ServerError from '../../../core/exceptions/ServerError.js';
+import Storage from '../../../core/utils/Storage.js';
 import Album from '../../domain/models/Album.js';
 
 class AlbumRepository {
@@ -53,6 +54,24 @@ class AlbumRepository {
             'SET name = $1, year = $2, updated_at = $3 WHERE id = $4 ' +
             'RETURNING id',
       values: [name, year, updatedAt, id],
+    };
+
+    const result = await this.database.query(query);
+
+    if (!result.rows.length) {
+      throw new NotFoundError('Gagal memperbarui album. Id tidak ditemukan');
+    }
+  }
+
+  async updateCover(id, filename) {
+    const cover = Storage.getLink(`img/album/${filename}`);
+    const updatedAt = new Date().toISOString();
+
+    const query = {
+      text: 'UPDATE albums ' +
+            'SET cover = $1, updated_at = $2 WHERE id = $3 ' +
+            'RETURNING id',
+      values: [cover, updatedAt, id],
     };
 
     const result = await this.database.query(query);

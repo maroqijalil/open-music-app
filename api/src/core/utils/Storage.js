@@ -17,6 +17,10 @@ class Storage {
       file.on('end', () => resolve(filename));
     });
   }
+
+  static getLink(filepath) {
+    return `http://${process.env.HOST}:${process.env.PORT}/${filepath}`;
+  }
 }
 
 export default Storage;

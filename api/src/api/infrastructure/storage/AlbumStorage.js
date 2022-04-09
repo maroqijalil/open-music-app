@@ -2,8 +2,8 @@ import * as path from 'path';
 import Storage from '../../../core/utils/Storage.js';
 
 class AlbumStorage {
-  constructor(root, name = 'album') {
-    this.folder = path.resolve(root, name);
+  constructor(publicPath, name = 'img/album') {
+    this.folder = path.resolve(publicPath, name);
 
     Storage.createIfDoesntExist(this.folder);
   }
