@@ -69,7 +69,7 @@ class AlbumRepository {
 
     const query = {
       text: 'UPDATE albums ' +
-            'SET cover = $1, updated_at = $2 WHERE id = $3 ' +
+            'SET cover_url = $1, updated_at = $2 WHERE id = $3 ' +
             'RETURNING id',
       values: [cover, updatedAt, id],
     };

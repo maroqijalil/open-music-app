@@ -14,6 +14,8 @@ import EXPORT_PLAYLIST_PLUGIN
   from '../../api/presentation/export/playlist/plugin.js';
 import Inert from '@hapi/inert';
 import UPLOAD_IMG_PLUGIN from '../../api/presentation/upload/img/plugin.js';
+import USER_ALBUM_PLUGIN from '../../api/presentation/user_album/plugin.js';
+import UPLOAD_ALBUM_PLUGIN from '../../api/presentation/upload/album/plugin.js';
 
 const createServer = async (database, broker, publicPath) => {
   const server = Hapi.server({
@@ -83,6 +85,14 @@ const createServer = async (database, broker, publicPath) => {
     {
       plugin: UPLOAD_IMG_PLUGIN,
       options: {publicPath},
+    },
+    {
+      plugin: UPLOAD_ALBUM_PLUGIN,
+      options: {database, publicPath},
+    },
+    {
+      plugin: USER_ALBUM_PLUGIN,
+      options: {database},
     },
   ]);
 

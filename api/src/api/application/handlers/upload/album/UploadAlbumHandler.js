@@ -24,7 +24,7 @@ class UploadAlbumHandler {
 
     return Response.create200Response({
       h,
-      message: 'Permintaan Anda sedang kami proses',
+      message: 'Sampul berhasil diunggah',
       code: 201,
     });
   }
