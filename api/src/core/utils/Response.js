@@ -32,6 +32,7 @@ class Response {
     message,
     data,
     code = 200,
+    header = undefined,
   }) {
     let response;
 
@@ -51,6 +52,10 @@ class Response {
         status: 'success',
         message,
       });
+    }
+
+    if (header) {
+      response.header(header.key, header.value);
     }
 
     response.code(code);

@@ -17,7 +17,7 @@ import UPLOAD_IMG_PLUGIN from '../../api/presentation/upload/img/plugin.js';
 import USER_ALBUM_PLUGIN from '../../api/presentation/user_album/plugin.js';
 import UPLOAD_ALBUM_PLUGIN from '../../api/presentation/upload/album/plugin.js';
 
-const createServer = async (database, broker, publicPath) => {
+const createServer = async (database, broker, publicPath, cache) => {
   const server = Hapi.server({
     host: process.env.HOST ?? 'localhost',
     port: process.env.PORT ?? 5000,
@@ -92,7 +92,7 @@ const createServer = async (database, broker, publicPath) => {
     },
     {
       plugin: USER_ALBUM_PLUGIN,
-      options: {database},
+      options: {database, cache},
     },
   ]);
 

@@ -4,6 +4,7 @@ import createServer from './core/server/server.js';
 import initBroker from './core/broker/broker.js';
 import * as path from 'path';
 import {fileURLToPath} from 'url';
+import initCache from './core/cache/cache.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -13,8 +14,9 @@ const start = async () => {
   const publicPath = path.resolve(__dirname, 'public');
   const database = initDatabase();
   const broker = initBroker();
+  const cache = initCache();
 
-  const server = await createServer(database, broker, publicPath);
+  const server = await createServer(database, broker, publicPath, cache);
   await server.start();
 };
 
