@@ -100,7 +100,7 @@ const createServer = async (database, broker, publicPath, cache) => {
     const {response} = request;
 
     if (response instanceof Error) {
-      // console.log(response);
+      console.log(response);
     }
 
     if (response instanceof ClientError) {

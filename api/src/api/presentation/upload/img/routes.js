@@ -6,7 +6,7 @@ const routes = (publicPath) => [
     path: '/img/{param*}',
     handler: {
       directory: {
-        path: path.resolve(publicPath, 'file'),
+        path: path.resolve(publicPath, 'img'),
       },
     },
   },
