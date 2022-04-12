@@ -1,6 +1,6 @@
 import {config} from 'dotenv';
 import initDatabase from './core/db/db.js';
-import initMailer from './core/mailer/mailer';
+import initMailer from './core/mailer/mailer.js';
 import createBroker from './core/broker/broker.js';
 
 const start = async () => {

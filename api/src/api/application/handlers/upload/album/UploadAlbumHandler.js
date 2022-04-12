@@ -11,6 +11,7 @@ class UploadAlbumHandler {
 
   async store(request, h) {
     const {cover} = request.payload;
+    console.log(cover.hapi.headers);
 
     this.validator.validate(cover.hapi.headers);
 

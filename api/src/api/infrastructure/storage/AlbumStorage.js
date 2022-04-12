@@ -9,7 +9,7 @@ class AlbumStorage {
   }
 
   write(file, meta) {
-    const filename = new Date() + meta.filename;
+    const filename = new Date().toISOString() + meta.filename;
     return Storage.write(file, this.folder, filename);
   }
 }

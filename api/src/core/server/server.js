@@ -99,6 +99,10 @@ const createServer = async (database, broker, publicPath, cache) => {
   server.ext('onPreResponse', (request, h) => {
     const {response} = request;
 
+    if (response instanceof Error) {
+      // console.log(response);
+    }
+
     if (response instanceof ClientError) {
       return Response.create400Response({
         h,

@@ -46,7 +46,13 @@ class UserAlbumRepository {
       values: [id],
     };
 
-    return await this.database.query(query);
+    const result = await this.database.query(query);
+
+    if (!result.rows.length) {
+      throw new NotFoundError('Album tidak ditemukan');
+    }
+
+    return result.rows[0].count;
   }
 
   async delete(userAlbum) {

@@ -8,7 +8,7 @@ import ExportPlaylistListener from
   '../../../application/listeners/export/playlist/ExportPlaylistListener.js';
 
 const EXPORT_PLAYLIST_QUEUE = {
-  name: 'export:playlist',
+  name: 'export:playlists',
   register: (channel, {database, mailer}) => {
     const playlistRepository = new PlaylistRepository(database);
     const playlistSongRepository = new PlaylistSongRepository(database);

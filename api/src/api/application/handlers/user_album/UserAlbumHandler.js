@@ -1,8 +1,9 @@
 import Response from '../../../../core/utils/Response.js';
 
 class UserAlbumHandler {
-  constructor(repository, cache) {
-    this.repository = repository;
+  constructor(albumRepository, likeRepository, cache) {
+    this.albumRepository = albumRepository;
+    this.likeRepository = likeRepository;
     this.cache = cache;
 
     this.store = this.store.bind(this);
@@ -14,12 +15,14 @@ class UserAlbumHandler {
     const {id: userId} = request.auth.credentials;
     const userAlbum = {userId, albumId};
 
-    const like = await this.repository.isExist(userAlbum);
+    await this.albumRepository.getById(albumId);
+
+    const like = await this.likeRepository.isExist(userAlbum);
 
     if (like) {
-      await this.repository.delete(userAlbum);
+      await this.likeRepository.delete(userAlbum);
     } else {
-      await this.repository.store(userAlbum);
+      await this.likeRepository.store(userAlbum);
     }
 
     await this.cache.delete(albumId);
@@ -43,10 +46,12 @@ class UserAlbumHandler {
         value: 'cache',
       };
     } else {
-      likes = await this.repository.countByAlbumId(id);
+      likes = await this.likeRepository.countByAlbumId(id);
 
       await this.cache.set(id, likes);
     }
+
+    likes = parseInt(likes);
 
     return Response.create200Response({
       h,

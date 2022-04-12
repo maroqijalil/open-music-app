@@ -1,4 +1,4 @@
-import redis from 'redos';
+import redis from 'redis';
 
 class Cache {
   constructor(host) {
