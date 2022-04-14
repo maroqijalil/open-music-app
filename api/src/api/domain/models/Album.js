@@ -12,7 +12,7 @@ class Album {
     this.id = id ?? '';
     this.name = name ?? '';
     this.year = year ?? 0;
-    this.coverUrl = cover_url ?? 0;
+    this.coverUrl = cover_url ?? null;
   }
 
   get() {
